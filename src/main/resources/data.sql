@@ -18,3 +18,6 @@ INSERT INTO tb_course(name, img_Uri, img_Gray_Uri) VALUES ('java', 'https://stor
 
 INSERT INTO tb_offer(edition,start_Moment,end_Moment, course_id) VALUES ('1.0', '2020-07-13T20:50:07.12345Z', '2021-07-13T20:50:07.12345Z', '1');
 INSERT INTO tb_offer(edition,start_Moment,end_Moment, course_id) VALUES ('1.0', '2021-07-13T20:50:07.12345Z', '2022-07-13T20:50:07.12345Z', '1');
+
+
+INSERT INTO tb_resource(title, description, position, img_Url, type, offer_id) VALUES ('Trilha html', 'Trilha do curso',1,'https://storage.needpix.com/rsynced_images/java-2327538_1280.png', 1, 1);

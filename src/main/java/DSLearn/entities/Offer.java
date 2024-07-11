@@ -2,6 +2,8 @@ package DSLearn.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -10,28 +12,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_offer")
-public class Offer implements Serializable{
-	
-	
+public class Offer implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String edition;
 	private Instant startMoment;
 	private Instant endMoment;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "course_id")
 	private Course course;
-	
+
+	@OneToMany(mappedBy = "offer")
+	private List<Resource> resources = new ArrayList<>();
+
 	public Offer() {
-		
+
 	}
 
 	public Offer(Long id, String edition, Instant startMoment, Instant endMoment, Course course) {
@@ -83,6 +88,10 @@ public class Offer implements Serializable{
 		this.course = course;
 	}
 
+	public List<Resource> getResources() {
+		return resources;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -99,7 +108,5 @@ public class Offer implements Serializable{
 		Offer other = (Offer) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
 }
