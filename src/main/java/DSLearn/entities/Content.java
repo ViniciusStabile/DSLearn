@@ -1,5 +1,10 @@
 package DSLearn.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_content")
 public class Content extends Lesson {
 
 	
