@@ -11,16 +11,16 @@ public class Content extends Lesson {
 	private static final long serialVersionUID = 1L;
 
 	private String textContent;
-	private String videoUrl;
+	private String videoUri;
 	
 	public Content() {
 		
 	}
 
-	public Content(Long id, String title, String position, Section section, String textContent, String videoUrl) {
+	public Content(Long id, String title, String position, Section section, String textContent, String videoUri) {
 		super(id, title, position, section);
 		this.textContent = textContent;
-		this.videoUrl = videoUrl;
+		this.videoUri = videoUri;
 	}
 
 	public String getTextContent() {
@@ -32,11 +32,11 @@ public class Content extends Lesson {
 	}
 
 	public String getVideoUrl() {
-		return videoUrl;
+		return videoUri;
 	}
 
-	public void setVideoUrl(String videoUrl) {
-		this.videoUrl = videoUrl;
+	public void setVideoUrl(String videoUri) {
+		this.videoUri = videoUri;
 	}
 	
 	

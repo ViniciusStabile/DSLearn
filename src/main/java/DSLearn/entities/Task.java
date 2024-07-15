@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_tast")
+@Table(name = "tb_task")
 public class Task extends Lesson {
 
 	
@@ -15,7 +15,7 @@ public class Task extends Lesson {
 	
 	private String description;
 	private Integer questCount;
-	private Integer approvalcount;
+	private Integer approvalCount;
 	private Double weight;
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
@@ -26,11 +26,11 @@ public class Task extends Lesson {
 	}
 
 	public Task(Long id, String title, String position, Section section, String description, Integer questCount,
-			Integer approvalcount, Double weight, Instant dueDate) {
+			Integer approvalCount, Double weight, Instant dueDate) {
 		super(id, title, position, section);
 		this.description = description;
 		this.questCount = questCount;
-		this.approvalcount = approvalcount;
+		this.approvalCount = approvalCount;
 		this.weight = weight;
 		this.dueDate = dueDate;
 	}
@@ -52,11 +52,11 @@ public class Task extends Lesson {
 	}
 
 	public Integer getApprovalcount() {
-		return approvalcount;
+		return approvalCount;
 	}
 
-	public void setApprovalcount(Integer approvalcount) {
-		this.approvalcount = approvalcount;
+	public void setApprovalcount(Integer approvalCount) {
+		this.approvalCount = approvalCount;
 	}
 
 	public Double getWeight() {

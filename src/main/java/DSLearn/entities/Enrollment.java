@@ -2,11 +2,14 @@ package DSLearn.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import DSLearn.entities.pk.EnrollmentPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,9 @@ public class Enrollment implements Serializable {
 	private Instant refundMoment;
 	private boolean available;
 	private boolean onlyUpdate;
+	
+	@ManyToMany(mappedBy = "enrollmentDone")
+	private Set<Lesson> lessonsDone = new HashSet<>();
 
 	public Enrollment() {
 
