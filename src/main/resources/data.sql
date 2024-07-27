@@ -14,6 +14,8 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 3);
 
 INSERT INTO tb_course(name, img_Uri, img_Gray_Uri) VALUES ('java', 'https://storage.needpix.com/rsynced_images/java-2327538_1280.png', 'https://cdn.iconscout.com/icon/free/png-256/free-java-file-51-775447.png');
+INSERT INTO tb_course(name, img_Uri, img_Gray_Uri) VALUES ('HTML', 'https://storage.needpix.com/rsynced_images/java-2327538_1280.png', 'https://cdn.iconscout.com/icon/free/png-256/free-java-file-51-775447.png');
+INSERT INTO tb_course(name, img_Uri, img_Gray_Uri) VALUES ('Java Script', 'https://storage.needpix.com/rsynced_images/java-2327538_1280.png', 'https://cdn.iconscout.com/icon/free/png-256/free-java-file-51-775447.png');
 
 INSERT INTO tb_offer(edition,start_Moment,end_Moment, course_id) VALUES ('1.0', TIMESTAMP WITH TIME ZONE '2020-11-20T23:00:00Z', TIMESTAMP WITH TIME ZONE '2021-11-20T23:00:00Z', '1');
 INSERT INTO tb_offer(edition,start_Moment,end_Moment, course_id) VALUES ('1.0', TIMESTAMP WITH TIME ZONE '2021-11-20T23:00:00Z', TIMESTAMP WITH TIME ZONE '2022-11-20T23:00:00Z', '1');
