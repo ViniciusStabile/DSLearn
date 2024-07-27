@@ -26,12 +26,12 @@ public class NotificationDTO implements Serializable {
 	@NotBlank(message = "Route is required")
 	private String route;
 
-	private UserDTO user;
+	private UserNotificationDTO user;
 
 	public NotificationDTO() {
 	}
 
-	public NotificationDTO(Long id, String text, Instant moment, boolean read, String route, UserDTO user) {
+	public NotificationDTO(Long id, String text, Instant moment, boolean read, String route, UserNotificationDTO user) {
 		this.id = id;
 		this.text = text;
 		this.moment = moment;
@@ -47,7 +47,7 @@ public class NotificationDTO implements Serializable {
 		this.read = entity.isRead();
 		this.route = entity.getRoute();
 		if (entity.getUser() != null) {
-			this.user = new UserDTO(entity.getUser());
+			this.user = new UserNotificationDTO(entity.getUser());
 		}
 	}
 
@@ -91,11 +91,11 @@ public class NotificationDTO implements Serializable {
 		this.route = route;
 	}
 
-	public UserDTO getUser() {
+	public UserNotificationDTO getUser() {
 		return user;
 	}
 
-	public void setUser(UserDTO user) {
+	public void UserNotificationDTO(UserNotificationDTO user) {
 		this.user = user;
 	}
 }
