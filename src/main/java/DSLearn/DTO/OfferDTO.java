@@ -3,7 +3,6 @@ package DSLearn.DTO;
 import java.io.Serializable;
 import java.time.Instant;
 
-import DSLearn.entities.Course;
 import DSLearn.entities.Offer;
 import jakarta.validation.constraints.NotBlank;
 
@@ -16,19 +15,16 @@ public class OfferDTO implements Serializable {
 	@NotBlank(message = "Required field")
 	private String edition;
 
-	@NotBlank(message = "Required field")
 	private Instant startMoment;
 
-	@NotBlank(message = "Required field")
 	private Instant endMoment;
 
-	@NotBlank(message = "Required field")
-	private Course course;
+	private CourseDTO course;
 
 	public OfferDTO() {
 	}
 
-	public OfferDTO(Long id, String edition, Instant startMoment, Instant endMoment, Course course) {
+	public OfferDTO(Long id, String edition, Instant startMoment, Instant endMoment, CourseDTO course) {
 		this.id = id;
 		this.edition = edition;
 		this.startMoment = startMoment;
@@ -41,9 +37,9 @@ public class OfferDTO implements Serializable {
 		edition = entity.getEdition();
 		startMoment = entity.getStartMoment();
 		endMoment = entity.getEndMoment();
-		course = entity.getCourse();
+		course = new CourseDTO(entity.getCourse());
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -76,14 +72,12 @@ public class OfferDTO implements Serializable {
 		this.endMoment = endMoment;
 	}
 
-	public Course getCourse() {
+	public CourseDTO getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public void setCourse(CourseDTO course) {
 		this.course = course;
 	}
-	
-	
 
 }

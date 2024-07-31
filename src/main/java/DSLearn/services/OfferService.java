@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import DSLearn.DTO.OfferDTO;
+import DSLearn.entities.Course;
 import DSLearn.entities.Offer;
 import DSLearn.repositories.OfferRepository;
 import DSLearn.services.exceptions.DatabaseException;
@@ -71,14 +72,20 @@ public class OfferService {
 		}
 	}
 
-	public void copyDtoToEntity(OfferDTO dto, Offer entity) {
+	private void copyDtoToEntity(OfferDTO dto, Offer entity) {
 		entity.setId(dto.getId());
 		entity.setEdition(dto.getEdition());
 		entity.setStartMoment(dto.getStartMoment());
 		entity.setEndMoment(dto.getEndMoment());
-		entity.setCourse(dto.getCourse());
-		
 
+		if (entity.getCourse() == null) {
+			entity.setCourse(new Course());
+		}
+
+		entity.getCourse().setId(dto.getCourse().getId());
+		entity.getCourse().setName(dto.getCourse().getName());
+		entity.getCourse().setImgGrayUri(dto.getCourse().getImgGrayUri());
+		entity.getCourse().setImgUri(dto.getCourse().getImgUri());
 	}
 
 }
