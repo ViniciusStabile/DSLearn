@@ -2,43 +2,51 @@ package DSLearn.DTO;
 
 import java.io.Serializable;
 
-import DSLearn.entities.Resource;
-import DSLearn.entities.enums.ResourceType;
+import DSLearn.entities.Section;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-public class ResourceDTO implements Serializable {
+public class SectionDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+
+	@Size(min = 2, max = 60, message = "Minimum 6 characters and maximum 50")
+	@NotBlank(message = "Required field")
 	private String title;
 	private String description;
 	private Integer position;
 	private String imgUrl;
-	private ResourceType type;
-	private OfferMinDTO offer;  
+	private ResourceMinDTO resource;
+	private SectionDTO prerequisite;
 
-	public ResourceDTO() {
+	public SectionDTO() {
+
 	}
 
-	public ResourceDTO(Long id, String title, String description, Integer position, String imgUrl, ResourceType type,
-			OfferMinDTO offer) {
+	public SectionDTO(Long id, String title, String description, Integer position, String imgUrl,
+			ResourceMinDTO resource, SectionDTO prerequisite) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.position = position;
 		this.imgUrl = imgUrl;
-		this.type = type;
-		this.offer = offer;
+		this.resource = resource;
+		this.prerequisite = prerequisite;
 	}
 
-	public ResourceDTO(Resource entity) {
+	public SectionDTO(Section entity) {
+
 		id = entity.getId();
 		title = entity.getTitle();
 		description = entity.getDescription();
 		position = entity.getPosition();
 		imgUrl = entity.getImgUrl();
-		type = entity.getType();
-		offer = new OfferMinDTO(entity.getOffer());
+		resource = new ResourceMinDTO(entity.getResource());
+		if (entity.getPrerequisite() != null) {
+			prerequisite = new SectionDTO(entity.getPrerequisite());
+		}
 	}
 
 	public Long getId() {
@@ -81,20 +89,20 @@ public class ResourceDTO implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public ResourceType getType() {
-		return type;
+	public ResourceMinDTO getResource() {
+		return resource;
 	}
 
-	public void setType(ResourceType type) {
-		this.type = type;
+	public void setResource(ResourceMinDTO resource) {
+		this.resource = resource;
 	}
 
-	public OfferMinDTO getOffer() {
-		return offer;
+	public SectionDTO getPrerequisite() {
+		return prerequisite;
 	}
 
-	public void setOffer(OfferMinDTO offer) {
-		this.offer = offer;
+	public void setPrerequisite(SectionDTO prerequisite) {
+		this.prerequisite = prerequisite;
 	}
 
 }

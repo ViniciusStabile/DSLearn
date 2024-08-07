@@ -10,55 +10,55 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import DSLearn.DTO.OfferDTO;
-import DSLearn.entities.Course;
+import DSLearn.DTO.ResourceDTO;
 import DSLearn.entities.Offer;
-import DSLearn.repositories.CourseRepository;
+import DSLearn.entities.Resource;
 import DSLearn.repositories.OfferRepository;
+import DSLearn.repositories.ResourceRepository;
 import DSLearn.services.exceptions.DatabaseException;
 import DSLearn.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class OfferService {
+public class ResourceService {
 
 	@Autowired
-	private OfferRepository repository;
+	private ResourceRepository repository;
 
 	@Autowired
-	private CourseRepository courseRepository;
+	private OfferRepository offerRepository;
 
 	@Transactional(readOnly = true)
-	public Page<OfferDTO> findAll(Pageable page) {
-		Page<Offer> list = repository.findAll(page);
-		return list.map(x -> new OfferDTO(x));
+	public Page<ResourceDTO> findAll(Pageable page) {
+		Page<Resource> list = repository.findAll(page);
+		return list.map(x -> new ResourceDTO(x));
 
 	}
 
 	@Transactional(readOnly = true)
-	public OfferDTO findById(Long id) {
-		Optional<Offer> obj = repository.findById(id);
-		Offer entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new OfferDTO(entity);
+	public ResourceDTO findById(Long id) {
+		Optional<Resource> obj = repository.findById(id);
+		Resource entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		return new ResourceDTO(entity);
 
 	}
 
 	@Transactional
-	public OfferDTO insert(OfferDTO dto) {
-		Offer entity = new Offer();
+	public ResourceDTO insert(ResourceDTO dto) {
+		Resource entity = new Resource();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new OfferDTO(entity);
+		return new ResourceDTO(entity);
 
 	}
 
 	@Transactional
-	public OfferDTO update(Long id, OfferDTO dto) {
+	public ResourceDTO update(Long id, ResourceDTO dto) {
 		try {
-			Offer entity = repository.getReferenceById(id);
+			Resource entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new OfferDTO(entity);
+			return new ResourceDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("ID not found");
 		}
@@ -76,20 +76,23 @@ public class OfferService {
 		}
 	}
 
-	private void copyDtoToEntity(OfferDTO dto, Offer entity) {
+	private void copyDtoToEntity(ResourceDTO dto, Resource entity) {
 		entity.setId(dto.getId());
-		entity.setEdition(dto.getEdition());
-		entity.setStartMoment(dto.getStartMoment());
-		entity.setEndMoment(dto.getEndMoment());
+		entity.setTitle(dto.getTitle());
+		entity.setDescription(dto.getDescription());
+		entity.setPosition(dto.getPosition());
+		entity.setImgUrl(dto.getImgUrl());
+		entity.setType(dto.getType());
 
-		if (dto.getCourse() != null) {
-			Long courseId = dto.getCourse().getId();
-			Course course = courseRepository.findById(courseId)
-					.orElseThrow(() -> new ResourceNotFoundException("Course not found for ID: " + courseId));
-			entity.setCourse(course);
+		if (dto.getOffer() != null) {
+			Long offerId = dto.getOffer().getId();
+			Offer offer = offerRepository.findById(offerId)
+					.orElseThrow(() -> new ResourceNotFoundException("Offer not found for ID: " + offerId));
+			entity.setOffer(offer);
 		} else {
-			entity.setCourse(null);
+			entity.setOffer(null);
 		}
 
 	}
+
 }

@@ -19,12 +19,12 @@ public class OfferDTO implements Serializable {
 
 	private Instant endMoment;
 
-	private CourseDTO course;
+	private CourseMinDTO course;
 
 	public OfferDTO() {
 	}
 
-	public OfferDTO(Long id, String edition, Instant startMoment, Instant endMoment, CourseDTO course) {
+	public OfferDTO(Long id, String edition, Instant startMoment, Instant endMoment, CourseMinDTO course) {
 		this.id = id;
 		this.edition = edition;
 		this.startMoment = startMoment;
@@ -37,7 +37,7 @@ public class OfferDTO implements Serializable {
 		edition = entity.getEdition();
 		startMoment = entity.getStartMoment();
 		endMoment = entity.getEndMoment();
-		course = new CourseDTO(entity.getCourse());
+		course = new CourseMinDTO(entity.getCourse());
 	}
 
 	public Long getId() {
@@ -72,11 +72,11 @@ public class OfferDTO implements Serializable {
 		this.endMoment = endMoment;
 	}
 
-	public CourseDTO getCourse() {
+	public CourseMinDTO getCourse() {
 		return course;
 	}
 
-	public void setCourse(CourseDTO course) {
+	public void setCourse(CourseMinDTO course) {
 		this.course = course;
 	}
 
