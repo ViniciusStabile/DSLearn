@@ -25,7 +25,7 @@ public class Task extends Lesson {
 		
 	}
 
-	public Task(Long id, String title, String position, Section section, String description, Integer questCount,
+	public Task(Long id, String title, Integer position, Section section, String description, Integer questCount,
 			Integer approvalCount, Double weight, Instant dueDate) {
 		super(id, title, position, section);
 		this.description = description;
