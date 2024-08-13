@@ -16,50 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import DSLearn.DTO.ResourceDTO;
-import DSLearn.services.ResourceService;
+import DSLearn.DTO.SectionDTO;
+import DSLearn.services.SectionService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/resources")
-public class ResourceController {
+@RequestMapping(value = "/sections")
+public class SectionResource {
 
 	@Autowired
-	private ResourceService service;
+	private SectionService service;
 
 	@GetMapping
-	public ResponseEntity<Page<ResourceDTO>> findAll(Pageable pageable) {
-		Page<ResourceDTO> list = service.findAll(pageable);
+	public ResponseEntity<Page<SectionDTO>> findAll(Pageable pageable) {
+		Page<SectionDTO> list = service.findAll(pageable);
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ResourceDTO> findById(@PathVariable Long id) {
-		ResourceDTO dto = service.findById(id);
+	public ResponseEntity<SectionDTO> findById(@PathVariable Long id) {
+		SectionDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping
-	public ResponseEntity<ResourceDTO> insert(@Valid @RequestBody ResourceDTO dto) {
-		ResourceDTO newDto = service.insert(dto);
+	public ResponseEntity<SectionDTO> insert(@Valid @RequestBody SectionDTO dto) {
+		SectionDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
 
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ResourceDTO> update(@PathVariable Long id, @Valid @RequestBody ResourceDTO dto) {
-		ResourceDTO newDto = service.update(id, dto);
+	public ResponseEntity<SectionDTO> update(@PathVariable Long id, @Valid @RequestBody SectionDTO dto) {
+		SectionDTO newDto = service.update(id, dto);
 		return ResponseEntity.ok().body(newDto);
 
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<ResourceDTO> delete(@PathVariable Long id) {
+	public ResponseEntity<SectionDTO> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	
-	
+
 }

@@ -77,12 +77,10 @@ public class ResourceService {
 	}
 
 	private void copyDtoToEntity(ResourceDTO dto, Resource entity) {
-		entity.setId(dto.getId());
 		entity.setTitle(dto.getTitle());
 		entity.setDescription(dto.getDescription());
 		entity.setPosition(dto.getPosition());
 		entity.setImgUrl(dto.getImgUrl());
-		entity.setType(dto.getType());
 
 		if (dto.getOffer() != null) {
 			Long offerId = dto.getOffer().getId();
