@@ -4,6 +4,8 @@ import DSLearn.entities.Content;
 
 public class ContentDTO extends LessonDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String textContent;
 	private String videoUri;
 
@@ -19,8 +21,8 @@ public class ContentDTO extends LessonDTO {
 
 	public ContentDTO(Content entity) {
 		super(entity.getId(), entity.getTitle(), entity.getPosition());
-		this.textContent = entity.getTextContent();
-		this.videoUri = entity.getVideoUrl();
+		textContent = entity.getTextContent();
+		videoUri = entity.getVideoUrl();
 	}
 
 	public String getTextContent() {
