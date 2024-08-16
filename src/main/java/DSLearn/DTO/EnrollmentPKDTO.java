@@ -4,35 +4,36 @@ import DSLearn.entities.pk.EnrollmentPK;
 
 public class EnrollmentPKDTO {
 
-	private UserDTO user;
-	private OfferDTO offer;
+	private UserMinDTO user;
+	private OfferMinDTO offer;
 
 	public EnrollmentPKDTO() {
 	}
 
-	public EnrollmentPKDTO(UserDTO user, OfferDTO offer) {
+	public EnrollmentPKDTO(UserMinDTO user, OfferMinDTO offer) {
 		this.user = user;
 		this.offer = offer;
 	}
 
 	public EnrollmentPKDTO(EnrollmentPK entity) {
-		user = new UserDTO(entity.getUser());
-		offer = new OfferDTO(entity.getOffer());
+		user = new UserMinDTO(entity.getUser());
+		offer = new OfferMinDTO(entity.getOffer());
 	}
 
-	public UserDTO getUser() {
+	public UserMinDTO getUser() {
 		return user;
 	}
 
-	public void setUser(UserDTO user) {
+	public void setUser(UserMinDTO user) {
 		this.user = user;
 	}
 
-	public OfferDTO getOffer() {
+	public OfferMinDTO getOffer() {
 		return offer;
 	}
 
-	public void setOffer(OfferDTO offer) {
+	public void setOffer(OfferMinDTO offer) {
 		this.offer = offer;
 	}
+
 }

@@ -29,7 +29,7 @@ public class EnrollmentDTO {
 	}
 
 	public EnrollmentDTO(Enrollment entity) {
-		this.id = new EnrollmentPKDTO(new UserDTO(entity.getStudent()), new OfferDTO(entity.getOffer()));
+		this.id = new EnrollmentPKDTO(new UserMinDTO(entity.getStudent()), new OfferMinDTO(entity.getOffer()));
 		this.enrollMoment = entity.getEnrollMoment();
 		this.refundMoment = entity.getRefundMoment();
 		this.available = entity.isAvailable();
