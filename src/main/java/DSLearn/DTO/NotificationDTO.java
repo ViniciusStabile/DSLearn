@@ -12,21 +12,23 @@ public class NotificationDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	@NotNull(message = "ID is required")
+    private Long id;
 
-	@Size(min = 6, message = "Minimum 6 characters")
-	@NotBlank(message = "Required field")
-	private String text;
+    @Size(min = 6, message = "Minimum 6 characters")
+    @NotBlank(message = "Text is required")
+    private String text;
 
-	@NotNull(message = "Moment is required")
-	private Instant moment;
+    @NotNull(message = "Moment is required")
+    private Instant moment;
 
-	private boolean read;
+    private boolean read; 
 
-	@NotBlank(message = "Route is required")
-	private String route;
+    @NotBlank(message = "Route is required")
+    private String route;
 
-	private UserNotificationDTO user;
+    @NotNull(message = "User is required")
+    private UserNotificationDTO user;
 
 	public NotificationDTO() {
 	}

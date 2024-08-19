@@ -3,12 +3,19 @@ package DSLearn.DTO;
 import java.io.Serializable;
 
 import DSLearn.entities.Resource;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ResourceMinDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull(message = "ID is required")
 	private Long id;
+
+	@NotBlank(message = "Title is required")
+	@Size(min = 2, max = 100, message = "Title must be between 2 and 100 characters")
 	private String title;
 
 	public ResourceMinDTO() {

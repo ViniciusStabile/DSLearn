@@ -1,12 +1,15 @@
 package DSLearn.DTO;
 
 import DSLearn.entities.pk.EnrollmentPK;
+import jakarta.validation.constraints.NotNull;
 
 public class EnrollmentPKDTO {
 
-	private UserMinDTO user;
-	private OfferMinDTO offer;
+	@NotNull(message = "User is required")
+    private UserMinDTO user;
 
+    @NotNull(message = "Offer is required")
+    private OfferMinDTO offer;
 	public EnrollmentPKDTO() {
 	}
 

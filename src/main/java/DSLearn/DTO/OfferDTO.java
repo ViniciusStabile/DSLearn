@@ -5,21 +5,26 @@ import java.time.Instant;
 
 import DSLearn.entities.Offer;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class OfferDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	@NotNull(message = "ID is required")
+    private Long id;
 
-	@NotBlank(message = "Required field")
-	private String edition;
+    @NotBlank(message = "Edition is required")
+    private String edition;
 
-	private Instant startMoment;
+    @NotNull(message = "Start moment is required")
+    private Instant startMoment;
 
-	private Instant endMoment;
+    @NotNull(message = "End moment is required")
+    private Instant endMoment;
 
-	private CourseMinDTO course;
+    @NotNull(message = "Course is required")
+    private CourseMinDTO course;
 
 	public OfferDTO() {
 	}

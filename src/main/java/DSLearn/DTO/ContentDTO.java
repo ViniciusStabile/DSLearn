@@ -1,12 +1,19 @@
 package DSLearn.DTO;
 
 import DSLearn.entities.Content;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class ContentDTO extends LessonDTO {
 
 	private static final long serialVersionUID = 1L;
 
+	@Size(min = 2, max = 255, message = "Minimum 2 characters and maximum 255 characters")
+    @NotBlank(message = "Text content is required")
 	private String textContent;
+	
+	@Size(min = 5, max = 255, message = "Minimum 5 characters and maximum 255 characters")
+    @NotBlank(message = "Video URI is required")
 	private String videoUri;
 
 	public ContentDTO() {

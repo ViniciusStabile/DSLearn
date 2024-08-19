@@ -5,14 +5,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import DSLearn.entities.Enrollment;
+import jakarta.validation.constraints.NotNull;
 
 public class EnrollmentDTO {
 
-	private EnrollmentPKDTO id;
-	private Instant enrollMoment;
+	@NotNull(message = "Enrollment ID is required")
+    private EnrollmentPKDTO id;
+
+    @NotNull(message = "Enrollment moment is required")
+    private Instant enrollMoment;
+    
 	private Instant refundMoment;
-	private boolean available;
-	private boolean onlyUpdate;
+	
+	@NotNull(message = "Availability status is required")
+    private boolean available;
+
+    @NotNull(message = "Only update status is required")
+    private boolean onlyUpdate;
 
 	private Set<LessonDTO> lessonsDone = new HashSet<>();
 

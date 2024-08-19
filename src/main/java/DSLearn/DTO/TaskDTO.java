@@ -1,14 +1,30 @@
 package DSLearn.DTO;
 
 import DSLearn.entities.Task;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 public class TaskDTO extends LessonDTO {
 
 	private static final long serialVersionUID = 1L;
 
+	@Size(max = 255, message = "Description cannot exceed 255 characters")
 	private String description;
+
+	@PositiveOrZero(message = "Quest count must be zero or positive")
+	@NotNull(message = "Quest count is required")
 	private Integer questCount;
+
+	@PositiveOrZero(message = "Approval count must be zero or positive")
+	@NotNull(message = "Approval count is required")
 	private Integer approvalCount;
+
+	@DecimalMin(value = "0.0", inclusive = false, message = "Weight must be greater than 0")
+	@DecimalMax(value = "100.0", message = "Weight must be less than or equal to 100")
+	@NotNull(message = "Weight is required")
 	private Double weight;
 
 	public TaskDTO() {
@@ -25,14 +41,13 @@ public class TaskDTO extends LessonDTO {
 	}
 
 	public TaskDTO(Task entity) {
-        super(entity.getId(), entity.getTitle(), entity.getPosition());
-        description = entity.getDescription();
-        questCount = entity.getQuestCount();
-        approvalCount = entity.getApprovalcount();
-        weight = entity.getWeight();
-    }
-	
-	
+		super(entity.getId(), entity.getTitle(), entity.getPosition());
+		description = entity.getDescription();
+		questCount = entity.getQuestCount();
+		approvalCount = entity.getApprovalcount();
+		weight = entity.getWeight();
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -65,5 +80,4 @@ public class TaskDTO extends LessonDTO {
 		this.weight = weight;
 	}
 
-	
 }

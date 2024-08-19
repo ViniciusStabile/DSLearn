@@ -4,15 +4,19 @@ import java.io.Serializable;
 
 import DSLearn.entities.Offer;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class OfferMinDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	@NotNull(message = "ID is required")
+    private Long id;
 
-	@NotBlank(message = "Required field")
-	private String edition;
+    @NotBlank(message = "Edition is required")
+    @Size(min = 2, max = 50, message = "Edition must be between 2 and 50 characters")
+    private String edition;
 
 	public OfferMinDTO() {
 	}

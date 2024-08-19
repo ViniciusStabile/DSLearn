@@ -4,18 +4,39 @@ import java.io.Serializable;
 
 import DSLearn.entities.Resource;
 import DSLearn.entities.enums.ResourceType;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ResourceDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private String title;
-	private String description;
-	private Integer position;
-	private String imgUrl;
-	private ResourceType type;
-	private OfferMinDTO offer;  
+	@NotNull(message = "ID is required")
+    private Long id;
+
+    @NotBlank(message = "Title is required")
+    @Size(min = 2, max = 100, message = "Title must be between 2 and 100 characters")
+    private String title;
+
+    @Size(max = 255, message = "Description cannot exceed 255 characters")
+    private String description;
+
+    @Min(value = 1, message = "Position must be greater than or equal to 1")
+    @Max(value = 1000, message = "Position must be less than or equal to 1000")
+    private Integer position;
+
+    @NotBlank(message = "Image URL is required")
+    @Size(min = 5, max = 255, message = "Image URL must be between 5 and 255 characters")
+    private String imgUrl;
+
+    @NotNull(message = "Type is required")
+    private ResourceType type;
+
+    @NotNull(message = "Offer is required")
+    private OfferMinDTO offer;
 
 	public ResourceDTO() {
 	}

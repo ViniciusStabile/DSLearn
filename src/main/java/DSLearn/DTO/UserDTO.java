@@ -8,24 +8,26 @@ import DSLearn.entities.Role;
 import DSLearn.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull(message = "ID is required")
 	private Long id;
 
-	@Size(min = 2, message = "Minimum 2 characters")
-	@NotBlank(message = "Required field")
+	@Size(min = 2, message = "Name must be at least 2 characters long")
+	@NotBlank(message = "Name is required")
 	private String name;
 
-	@NotBlank(message = "Required field")
-	@Email(message = "Invalid imail")
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email address")
 	private String email;
 
-	@Size(min = 6, max = 50, message = "Minimum 6 characters and maximum 50")
-	@NotBlank(message = "Required field")
+	@Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters")
+	@NotBlank(message = "Password is required")
 	private String password;
 
 	Set<RoleDTO> roles = new HashSet<>();
