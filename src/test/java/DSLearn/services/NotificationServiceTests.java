@@ -1,5 +1,6 @@
 package DSLearn.services;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -14,34 +15,36 @@ import org.mockito.Mockito;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import DSLearn.DTO.UserDTO;
+import DSLearn.DTO.NotificationDTO;
+import DSLearn.entities.Notification;
 import DSLearn.entities.Role;
 import DSLearn.entities.User;
-import DSLearn.repositories.RoleRepository;
+import DSLearn.repositories.NotificationRepository;
 import DSLearn.repositories.UserRepository;
 import DSLearn.services.exceptions.DatabaseException;
 import DSLearn.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @ExtendWith(SpringExtension.class)
-public class UserServiceTests {
+public class NotificationServiceTests {
 
 	@InjectMocks
-	private UserService service;
+	private NotificationService service;
 
 	@Mock
-	private UserRepository repository;
-
+	private NotificationRepository repository;
+	
 	@Mock
-	private RoleRepository roleRepository;
+	private UserRepository userRepository;
 
 	private Long existingId;
 	private Long nonExistingId;
 	private Long dependentId;
+	private Notification notification;
+	private NotificationDTO notificationDTO;
 	private User user;
-	private UserDTO userDTO;
 	private Role role;
-	Set<Role> roles;
+	private Set<Role> roles;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -51,35 +54,34 @@ public class UserServiceTests {
 		role = new Role(1L, "ROLE_STUDENT");
 		roles = new HashSet<>();
 		roles.add(role);
-		user = new User(existingId, "Alex", "alex@gmail.com",
-				"$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG", roles);
-		userDTO = new UserDTO(user);
+		user = new User(1L, "Alex", "alex@gmail.com", "$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG",
+				roles);
+		notification = new Notification(existingId, "Notification Text", Instant.now(), false, "route", user);
+		notificationDTO = new NotificationDTO(notification);
 
-		Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(user));
+		Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(notification));
 		Mockito.when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
-		Mockito.when(repository.findById(dependentId)).thenReturn(Optional.of(user));
-		Mockito.when(roleRepository.findByAuthority("ROLE_STUDENT")).thenReturn(role);
-		Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
-		Mockito.when(repository.getReferenceById(existingId)).thenReturn(user);
-		Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
-		Mockito.when(roleRepository.getReferenceById(role.getId())).thenReturn(role);
+		Mockito.when(repository.findById(dependentId)).thenReturn(Optional.of(notification));
+		Mockito.when(repository.save(Mockito.any(Notification.class))).thenReturn(notification);
+		Mockito.when(repository.getReferenceById(existingId)).thenReturn(notification);
 		Mockito.when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
 		Mockito.when(repository.existsById(existingId)).thenReturn(true);
-		Mockito.doNothing().when(repository).deleteById(existingId);
 		Mockito.when(repository.existsById(nonExistingId)).thenReturn(false);
-		Mockito.when(repository.existsById(existingId)).thenReturn(true);
 		Mockito.when(repository.existsById(dependentId)).thenReturn(true);
+		Mockito.doNothing().when(repository).deleteById(existingId);
 		Mockito.doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
-
+		Mockito.when(userRepository.existsById(existingId)).thenReturn(true);
+		Mockito.when(userRepository.existsById(nonExistingId)).thenReturn(true);
+		Mockito.when(userRepository.existsById(dependentId)).thenReturn(true);
 	}
 
 	@Test
-	public void findByIdShouldReturnUserDTOWhenIdExists() {
-		UserDTO result = service.findById(existingId);
+	public void findByIdShouldReturnNotificationDTOWhenIdExists() {
+		NotificationDTO result = service.findById(existingId);
 
 		Assertions.assertNotNull(result);
-		Assertions.assertEquals(userDTO.getId(), result.getId());
-		Assertions.assertEquals(userDTO.getName(), result.getName());
+		Assertions.assertEquals(notificationDTO.getId(), result.getId());
+		Assertions.assertEquals(notificationDTO.getText(), result.getText());
 	}
 
 	@Test
@@ -90,33 +92,28 @@ public class UserServiceTests {
 	}
 
 	@Test
-	public void insertShouldReturnUserDTOWhenSuccessful() {
-		UserDTO result = service.insert(userDTO);
+	public void insertShouldReturnNotificationDTOWhenSuccessful() {
+		NotificationDTO result = service.insert(notificationDTO);
 
 		Assertions.assertNotNull(result);
-		Assertions.assertEquals(userDTO.getId(), result.getId());
-		Assertions.assertEquals(userDTO.getName(), result.getName());
-
+		Assertions.assertEquals(notificationDTO.getId(), result.getId());
+		Assertions.assertEquals(notificationDTO.getText(), result.getText());
 	}
 
 	@Test
-	public void updateShouldReturnUserDTOWhenIdExists() {
-		user.getRoles().add(role);
-
-		UserDTO result = service.update(existingId, userDTO);
+	public void updateShouldReturnNotificationDTOWhenIdExists() {
+		NotificationDTO result = service.update(existingId, notificationDTO);
 
 		Assertions.assertNotNull(result);
-		Assertions.assertEquals(userDTO.getId(), result.getId());
-		Assertions.assertEquals(userDTO.getName(), result.getName());
-
+		Assertions.assertEquals(notificationDTO.getId(), result.getId());
+		Assertions.assertEquals(notificationDTO.getText(), result.getText());
 	}
 
 	@Test
 	public void updateShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
 		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.update(nonExistingId, userDTO);
+			service.update(nonExistingId, notificationDTO);
 		});
-
 	}
 
 	@Test
@@ -135,7 +132,6 @@ public class UserServiceTests {
 
 	@Test
 	public void deleteShouldThrowDatabaseExceptionWhenIntegrityViolationOccurs() {
-
 		Assertions.assertThrows(DatabaseException.class, () -> {
 			service.delete(dependentId);
 		});
