@@ -33,7 +33,7 @@ public class NotificationServiceTests {
 
 	@Mock
 	private NotificationRepository repository;
-	
+
 	@Mock
 	private UserRepository userRepository;
 
@@ -45,9 +45,15 @@ public class NotificationServiceTests {
 	private User user;
 	private Role role;
 	private Set<Role> roles;
+	private Long existingUserId;
+	private Long nonExistingUserId;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		existingUserId = 1L;
+		nonExistingUserId = 2L;
+		user = new User();
+		user.setId(existingUserId);
 		existingId = 1L;
 		nonExistingId = 200L;
 		dependentId = 3L;
@@ -71,8 +77,11 @@ public class NotificationServiceTests {
 		Mockito.doNothing().when(repository).deleteById(existingId);
 		Mockito.doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
 		Mockito.when(userRepository.existsById(existingId)).thenReturn(true);
-		Mockito.when(userRepository.existsById(nonExistingId)).thenReturn(true);
+		Mockito.when(userRepository.existsById(nonExistingId)).thenReturn(false);
 		Mockito.when(userRepository.existsById(dependentId)).thenReturn(true);
+		Mockito.when(userRepository.findById(existingUserId)).thenReturn(Optional.of(user));
+		Mockito.when(userRepository.findById(nonExistingUserId)).thenReturn(Optional.empty());
+		Mockito.when(repository.save(Mockito.any(Notification.class))).thenReturn(notification);
 	}
 
 	@Test
@@ -98,6 +107,14 @@ public class NotificationServiceTests {
 		Assertions.assertNotNull(result);
 		Assertions.assertEquals(notificationDTO.getId(), result.getId());
 		Assertions.assertEquals(notificationDTO.getText(), result.getText());
+	}
+
+	@Test
+	public void insertShouldReturnIllegalArgumentExceptionWhenUserDoesNotExists() {
+		notificationDTO.getUser().setId(nonExistingUserId);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			service.insert(notificationDTO);
+		});
 	}
 
 	@Test

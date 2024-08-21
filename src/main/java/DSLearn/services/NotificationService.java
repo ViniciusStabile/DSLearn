@@ -45,8 +45,13 @@ public class NotificationService {
 
 	@Transactional
 	public NotificationDTO insert(NotificationDTO dto) {
+
+		 User user = userRepository.findById(dto.getUser().getId()).orElseThrow(() ->
+         new IllegalArgumentException("Valid user must be provided")
+     );
 		Notification entity = new Notification();
 		copyDtoToEntity(dto, entity);
+		entity.setUser(user);
 		entity = repository.save(entity);
 		return new NotificationDTO(entity);
 
@@ -82,11 +87,6 @@ public class NotificationService {
 		entity.setRead(dto.isRead());
 		entity.setRoute(dto.getRoute());
 
-		if (dto.getUser() != null && dto.getUser().getId() != null) {
-			User user = userRepository.getReferenceById(dto.getUser().getId());
-			entity.setUser(user);
-		}
-
 	}
-
+	
 }
