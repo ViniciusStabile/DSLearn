@@ -88,10 +88,10 @@ public class SectionService {
 		}
 
 		if (dto.getPrerequisite() != null && dto.getPrerequisite().getId() != null) {
-			Section prerequisite = new Section();
-			prerequisite.setId(dto.getPrerequisite().getId());
+			Section prerequisite = repository.getReferenceById(dto.getPrerequisite().getId());
 			entity.setPrerequisite(prerequisite);
-
+		} else {
+			entity.setPrerequisite(null);
 		}
 
 	}
