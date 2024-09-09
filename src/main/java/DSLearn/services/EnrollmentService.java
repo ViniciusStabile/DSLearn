@@ -35,14 +35,12 @@ public class EnrollmentService {
 
 	@Autowired
 	private LessonRepository lessonRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private OfferRepository offerRepository;
-	
-	
 
 	@Transactional(readOnly = true)
 	public Page<EnrollmentDTO> findAll(Pageable page) {
@@ -112,18 +110,6 @@ public class EnrollmentService {
 		    entity.getLessonsDone().add(lesson);
 		}
 
-		//UserMinDTO user = dto.getId().getUser();
-		//OfferMinDTO offer = dto.getId().getOffer();
-
-		//entity.getStudent().setId(user.getId());
-		//entity.getOffer().setId(offer.getId());
-
-		//entity.getLessonsDone().clear();
-		//for (LessonDTO lessonDTO : dto.getLessonsDone()) {
-		//Lesson lesson = LessonRepository.getReferenceById(lessonDTO.getId());
-		//entity.getLessonsDone().add(lesson);
 		}
 
 	}
-
-
