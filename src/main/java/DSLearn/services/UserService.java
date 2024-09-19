@@ -43,7 +43,7 @@ public class UserService {
 		return new UserDTO(entity);
 
 	}
-	
+
 	@Transactional
 	public UserDTO insert(UserDTO dto) {
 		User entity = new User();
@@ -53,9 +53,9 @@ public class UserService {
 		entity.getRoles().add(role);
 		entity = repository.save(entity);
 		return new UserDTO(entity);
-		
+
 	}
-	
+
 	@Transactional
 	public UserDTO update(Long id, UserDTO dto) {
 		try {
@@ -67,7 +67,7 @@ public class UserService {
 			throw new ResourceNotFoundException("ID not found");
 		}
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
@@ -82,7 +82,7 @@ public class UserService {
 
 	public void copyDtoToEntity(UserDTO dto, User entity) {
 		entity.setName(dto.getName());
-		entity.setEmail(dto.getName());
+		entity.setEmail(dto.getEmail());
 		entity.setPassword(dto.getPassword());
 
 		entity.getRoles().clear();

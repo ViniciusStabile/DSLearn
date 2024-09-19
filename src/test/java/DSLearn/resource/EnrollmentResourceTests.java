@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,7 +29,6 @@ import DSLearn.DTO.EnrollmentDTO;
 import DSLearn.DTO.EnrollmentPKDTO;
 import DSLearn.DTO.OfferMinDTO;
 import DSLearn.DTO.UserMinDTO;
-import DSLearn.entities.Enrollment;
 import DSLearn.entities.Offer;
 import DSLearn.entities.User;
 import DSLearn.entities.pk.EnrollmentPK;
@@ -50,14 +48,11 @@ public class EnrollmentResourceTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private Enrollment enrollment;
 	private EnrollmentDTO enrollmentDTO;
-	private EnrollmentPK enrollmentPK;
-	private EnrollmentPK enrollmentDependentPK;
 	private EnrollmentPKDTO enrollmentPKDTO;
 
 	private User user;
-	private User userDependentId;
+
 	private Offer offer;
 
 	private EnrollmentPK nonExistingPK;
@@ -69,15 +64,9 @@ public class EnrollmentResourceTests {
 	void setUp() throws Exception {
 
 		user = new User(1L, "alex", "alex@gmail.com", "abcde", null);
-		userDependentId = new User(2L, "Mario", "Mario@gmail.com", "abcdef", null);
 
 		offer = new Offer(1L, "Edition 1", Instant.parse("2023-01-01T10:00:00Z"), Instant.parse("2023-12-31T10:00:00Z"),
 				null);
-
-		enrollmentPK = new EnrollmentPK(user, offer);
-		enrollmentDependentPK = new EnrollmentPK(userDependentId, offer);
-
-		enrollment = new Enrollment(user, offer, Instant.now(), null, true, false);
 
 		UserMinDTO userMinDTO = new UserMinDTO(user.getId(), user.getName());
 		OfferMinDTO offerMinDTO = new OfferMinDTO(offer.getId(), offer.getEdition());
@@ -90,7 +79,7 @@ public class EnrollmentResourceTests {
 		page = new PageImpl<>(List.of(enrollmentDTO));
 
 		Mockito.when(service.findAll(any(Pageable.class))).thenReturn(page);
-		
+
 		Mockito.when(service.findById(existingPK)).thenReturn(enrollmentDTO);
 		Mockito.when(service.findById(nonExistingPK)).thenThrow(ResourceNotFoundException.class);
 
@@ -103,7 +92,6 @@ public class EnrollmentResourceTests {
 		Mockito.doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingPK);
 	}
 
-	
 	@Test
 	public void findAllShouldReturnPage() throws Exception {
 		mockMvc.perform(get("/enrollments").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
