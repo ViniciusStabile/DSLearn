@@ -12,7 +12,6 @@ public class LessonDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message = "ID is required")
     private Long id;
 
     @NotNull(message = "Title is required")

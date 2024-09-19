@@ -12,7 +12,6 @@ public class NotificationDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message = "ID is required")
     private Long id;
 
     @Size(min = 6, message = "Minimum 6 characters")

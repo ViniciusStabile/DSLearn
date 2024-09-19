@@ -15,7 +15,6 @@ public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message = "ID is required")
 	private Long id;
 
 	@Size(min = 2, message = "Name must be at least 2 characters long")

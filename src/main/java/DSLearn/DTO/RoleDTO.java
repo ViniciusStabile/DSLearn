@@ -11,7 +11,7 @@ public class RoleDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message = "ID is required")
+
 	private Long id;
 
 	@NotBlank(message = "Authority is required")

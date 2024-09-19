@@ -13,7 +13,6 @@ public class SectionDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message = "ID is required")
 	private Long id;
 
 	@NotBlank(message = "Title is required")
